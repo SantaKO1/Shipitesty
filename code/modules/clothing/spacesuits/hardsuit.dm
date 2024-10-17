@@ -1286,7 +1286,7 @@
 	desc = "A dual-mode advanced hardsuit designed for special combat operations. It is in EVA mode. Produced by the NanoTrasen."
 	alt_desc = "A dual-mode advanced hardsuit designed for special combat operations. It is in combat mode. Produced by the NanoTrasen."
 	mob_overlay_icon = 'mod_celadon/_storge_icons/icons/helms_snouted.dmi'
-	icon = 'mod_celadon/_storge_icons/icons/helms_snouted.dmi'
+	icon = 'mod_celadon/_storge_icons/icons/obj/head.dmi'
 	icon_state = "hardsuit1-nanotras"
 	item_state = "nanotras_helm"
 	hardsuit_type = "nanotras"

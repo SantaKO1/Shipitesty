@@ -13,7 +13,7 @@
 	desc = "Nanotrasen's take on dual-mode hardsuits. It's a well armored and heavily modified version of the standart issue prewar security hardsuit using reverse-engineered dual-mode technology. Those suits are normally issued to Nanotrasen's elite security forces. It is in EVA mode."
 	alt_desc = "Nanotrasen's take on dual-mode hardsuits. It's a well armored and heavily modified version of the standart issue prewar security hardsuit using reverse-engineered dual-mode technology. Those suits are normally issued to Nanotrasen's elite security forces. It is in combat mode."
 	mob_overlay_icon = 'mod_celadon/_storge_icons/icons/mob/spacesuits_celadon.dmi'
-	icon = 'mod_celadon/_storge_icons/icons/obj/spacesuits_celadon.dmi'
+	icon = 'mod_celadon/_storge_icons/icons/obj/head.dmi'
 	icon_state = "hardsuit1-nanotras"
 	item_state = "nanotras_hardsuit"
 	hardsuit_type = "nanotras"

@@ -2,7 +2,7 @@
 
 - https://github.com/CeladonSS13/Shiptest/pulls/#####
 
-## НАЗВАНИЕ_МОДА
+## Хардсьют НТ
 
 ID мода: NT_HARDSUIT
 

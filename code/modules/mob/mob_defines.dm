@@ -230,3 +230,9 @@
 
 	/// Takes the four cardinal direction defines. Any atoms moving into this atom's tile will be allowed to from the added directions.
 	var/passthroughable = NONE
+
+	///the icon currently used for the typing indicator's bubble
+	var/active_typing_indicator
+
+	///the icon currently used for the thinking indicator's bubble
+	var/active_thinking_indicator

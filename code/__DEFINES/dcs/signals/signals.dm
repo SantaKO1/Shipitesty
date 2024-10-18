@@ -563,6 +563,12 @@
 /// Called when the player replies. From /client/proc/cmd_admin_pm().
 #define COMSIG_ADMIN_HELP_REPLIED "admin_help_replied"
 
+/**
+ * stuff like `copytext(input, length(input))` will trim the last character of the input,
+ * because DM does it so it copies until the char BEFORE the `end` arg, so we need to bump `end` by 1 in these cases.
+ */
+#define PREVENT_CHARACTER_TRIM_LOSS(integer) (integer + 1)
+
 // /obj/item/pda signals
 #define COMSIG_PDA_CHANGE_RINGTONE "pda_change_ringtone" //called on pda when the user changes the ringtone: (mob/living/user, new_ringtone)
 	#define COMPONENT_STOP_RINGTONE_CHANGE 1

@@ -229,6 +229,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	// Instantiate tgui panel
 	tgui_panel = new(src, "browseroutput")
 
+	tgui_say = new(src, "tgui_say")
+
 	initialize_commandbar_spy()
 
 	GLOB.ahelp_tickets.client_login(src)
@@ -358,6 +360,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 	// Initialize tgui panel
 	tgui_panel.initialize()
+
+	tgui_say.initialize()
 
 	if(alert_mob_dupe_login)
 		spawn()
@@ -1027,16 +1031,24 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 					movement_keys[key] = WEST
 				if("South")
 					movement_keys[key] = SOUTH
-				if("Say")
-					winset(src, "default-[REF(key)]", "parent=default;name=[key];command=say")
-				if("OOC")
-					winset(src, "default-[REF(key)]", "parent=default;name=[key];command=ooc")
-				if("LOOC")
-					winset(src, "default-[REF(key)]", "parent=default;name=[key];command=looc")
-				if("Me")
-					winset(src, "default-[REF(key)]", "parent=default;name=[key];command=me")
-				if("Whisper")
-					winset(src, "default-[REF(key)]", "parent=default;name=[key];command=whisper")
+				if(SAY_CHANNEL)
+					var/say = tgui_say_create_open_command(SAY_CHANNEL)
+					winset(src, "default-[REF(key)]", "parent=default;name=[key];command=[say]")
+				if(RADIO_CHANNEL)
+					var/radio = tgui_say_create_open_command(RADIO_CHANNEL)
+					winset(src, "default-[REF(key)]", "parent=default;name=[key];command=[radio]")
+				if(ME_CHANNEL)
+					var/me = tgui_say_create_open_command(ME_CHANNEL)
+					winset(src, "default-[REF(key)]", "parent=default;name=[key];command=[me]")
+				if(OOC_CHANNEL)
+					var/ooc = tgui_say_create_open_command(OOC_CHANNEL)
+					winset(src, "default-[REF(key)]", "parent=default;name=[key];command=[ooc]")
+				if(LOOC_CHANNEL)
+					var/looc = tgui_say_create_open_command(SAY_CHANNEL)
+					winset(src, "default-[REF(key)]", "parent=default;name=[key];command=[looc]")
+				if(WHISPER_CHANNEL)
+					var/whisper = tgui_say_create_open_command(SAY_CHANNEL)
+					winset(src, "default-[REF(key)]", "parent=default;name=[key];command=[whisper]")
 
 /client/proc/change_view(new_size)
 	if (isnull(new_size))

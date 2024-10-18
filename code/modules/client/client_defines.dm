@@ -195,3 +195,5 @@
 	/// Used by SSserver_maint to detect if a client is newly AFK.
 	var/last_seen_afk = 0
 
+	/// Does this client have typing indicators enabled?
+	var/typing_indicators = FALSE

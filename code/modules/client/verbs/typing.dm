@@ -17,12 +17,43 @@
 		commandbar_typing = TRUE
 		start_typing()
 
-/client/proc/start_typing()
-	mob.set_typing_indicator(TRUE)
+/** Sets the mob as "thinking" - with indicator and the TRAIT_THINKING_IN_CHARACTER trait */
+/client/proc/start_thinking()
+	if(!typing_indicators)
+		return FALSE
+	/// Special exemptions
+	if(isabductor(mob))
+		return FALSE
+	ADD_TRAIT(mob, TRAIT_THINKING_IN_CHARACTER, CURRENTLY_TYPING_TRAIT)
+	mob.create_thinking_indicator()
 
+/** Removes typing/thinking indicators and flags the mob as not thinking */
+/client/proc/stop_thinking()
+	mob?.remove_all_indicators()
+
+/**
+ * Handles the user typing. After a brief period of inactivity,
+ * signals the client mob to revert to the "thinking" icon.
+ */
+/client/proc/start_typing()
+	var/mob/client_mob = mob
+	client_mob.remove_thinking_indicator()
+	if(!typing_indicators || !HAS_TRAIT(client_mob, TRAIT_THINKING_IN_CHARACTER))
+		return FALSE
+	client_mob.create_typing_indicator()
+	addtimer(CALLBACK(src, PROC_REF(stop_typing)), 5 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE | TIMER_STOPPABLE)
+
+/**
+ * Callback to remove the typing indicator after a brief period of inactivity.
+ * If the user was typing IC, the thinking indicator is shown.
+ */
 /client/proc/stop_typing()
 	if(isnull(mob))
 		return FALSE
-	mob.set_typing_indicator(FALSE)
+	var/mob/client_mob = mob
+	client_mob.remove_typing_indicator()
+	if(!typing_indicators || !HAS_TRAIT(client_mob, TRAIT_THINKING_IN_CHARACTER))
+		return FALSE
+	client_mob.create_thinking_indicator()
 
 #undef IC_VERBS

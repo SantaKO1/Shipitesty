@@ -165,6 +165,9 @@
 // Plane for balloon text (text that fades up)
 #define BALLOON_CHAT_PLANE 33
 
+/// Bubble for typing indicators
+#define TYPING_LAYER 34
+
 //HUD layer defines part two
 
 #define HUD_PLANE 42

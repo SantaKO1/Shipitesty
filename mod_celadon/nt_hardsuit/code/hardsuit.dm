@@ -5,6 +5,7 @@
 	alt_desc = "A dual-mode advanced hardsuit designed for special combat operations. It is in combat mode. Produced by the NanoTrasen."
 	mob_overlay_icon = 'mod_celadon/_storge_icons/icons/helms_snouted.dmi'
 	icon = 'mod_celadon/_storge_icons/icons/obj/head.dmi'
+	vox_override_icon = 'mod_celadon/nt_hardsuit/icons/vox_head.dmi'
 	icon_state = "hardsuit1-nanotras"
 	item_state = "nanotras_helm"
 	hardsuit_type = "nanotras"
@@ -94,6 +95,7 @@
 	alt_desc = "Nanotrasen's take on dual-mode hardsuits. It's a well armored and heavily modified version of the standart issue prewar security hardsuit using reverse-engineered dual-mode technology. Those suits are normally issued to Nanotrasen's elite security forces. It is in combat mode."
 	mob_overlay_icon = 'mod_celadon/_storge_icons/icons/mob/spacesuits_celadon.dmi'
 	icon = 'mod_celadon/_storge_icons/icons/obj/spacesuits_celadon.dmi'
+	vox_override_icon = 'mod_celadon/nt_hardsuit/icons/vox_suit.dmi'
 	icon_state = "hardsuit1-nanotras"
 	item_state = "nanotras_hardsuit"
 	hardsuit_type = "nanotras"

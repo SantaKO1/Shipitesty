@@ -32,6 +32,9 @@
 	///Shipwide bank account used for cargo consoles and bounty payouts.
 	var/datum/bank_account/ship/ship_account
 
+	/// All battle consoles connected to this ship
+	var/list/obj/machinery/computer/battle_console/battle_consoles = list()
+
 	/// List of currently-accepted missions.
 	var/list/datum/mission/missions
 	/// The maximum number of currently active missions that a ship may take on.

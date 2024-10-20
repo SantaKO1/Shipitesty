@@ -1,0 +1,8 @@
+#ifndef MODPACK_CELADON_DEMOCRACY
+#define MODPACK_CELADON_DEMOCRACY
+
+#include "_democracy.dm"
+
+#include "code/battle_console.dm"
+
+#endif

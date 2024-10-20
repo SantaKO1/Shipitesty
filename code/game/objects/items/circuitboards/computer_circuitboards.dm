@@ -396,3 +396,7 @@
 /obj/item/circuitboard/computer/shuttle/helm
 	name = "Shuttle Helm (Computer Board)"
 	build_path = /obj/machinery/computer/helm
+
+/obj/item/circuitboard/computer/shuttle/battle_console
+	name = "Battle console (Computer Board)"
+	build_path = /obj/machinery/computer/battle_console

@@ -20,7 +20,7 @@
 	clicksound = null
 
 	/// The ship we reside on for ease of access
-	var/datum/overmap/ship/controlled/current_ship as current_ship
+	var/datum/overmap/ship/controlled/current_ship
 	/// All ships nearby current ship
 	var/list/controlled_ships
 	/// All torpedos in use

@@ -4,5 +4,6 @@
 #include "_democracy.dm"
 
 #include "code/battle_console.dm"
+#include "code/torpedo/torpedo.dm"
 
 #endif

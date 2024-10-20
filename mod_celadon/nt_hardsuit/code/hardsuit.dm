@@ -3,7 +3,7 @@
 	name = "navy-blue helmet"
 	desc = "A dual-mode advanced hardsuit designed for special combat operations. It is in EVA mode. Produced by the NanoTrasen."
 	alt_desc = "A dual-mode advanced hardsuit designed for special combat operations. It is in combat mode. Produced by the NanoTrasen."
-	mob_overlay_icon = 'mod_celadon/_storge_icons/icons/helms_snouted.dmi'
+	mob_overlay_icon = 'mod_celadon/nt_hardsuit/icons/human_head.dmi'
 	icon = 'mod_celadon/_storge_icons/icons/obj/head.dmi'
 	vox_override_icon = 'mod_celadon/nt_hardsuit/icons/vox_head.dmi'
 	icon_state = "hardsuit1-nanotras"
@@ -103,6 +103,6 @@
 	allowed = list(/obj/item/gun, /obj/item/ammo_box,/obj/item/ammo_casing, /obj/item/melee/baton, /obj/item/melee/transforming/energy/sword/saber, /obj/item/restraints/handcuffs, /obj/item/tank/internals)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/nanotrasen
 	jetpack = /obj/item/tank/jetpack/suit
-	supports_variations = DIGITIGRADE_VARIATION | VOX_VARIATION
+	supports_variations = VOX_VARIATION
 	var/combat_slowdown = 0.2
 	var/lightweight = 0

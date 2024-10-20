@@ -31,7 +31,9 @@ ID мода: NT_HARDSUIT
 - `mod_celadon\_storge_icons\icons\obj\spacesuits_celadon.dmi`
 - `mod_celadon\_storge_icons\icons\helms_snouted.dmi`
 - `mod_celadon\_storge_icons\icons\mob\spacesuits_celadon.dmi`
-- ``
+- `mod_celadon\nt_hardsuit\icons\human_head.dmi`
+- `mod_celadon\nt_hardsuit\icons\vox_head.dmi`
+- `mod_celadon\nt_hardsuit\icons\vox_suit.dmi`
 
 ### Авторы
 

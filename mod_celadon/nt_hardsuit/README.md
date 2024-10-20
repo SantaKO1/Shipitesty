@@ -34,6 +34,8 @@ ID мода: NT_HARDSUIT
 - `mod_celadon\nt_hardsuit\icons\human_head.dmi`
 - `mod_celadon\nt_hardsuit\icons\vox_head.dmi`
 - `mod_celadon\nt_hardsuit\icons\vox_suit.dmi`
+- `mod_celadon\_storge_icons\icons\clothing\onmob_head_tajara.dmi`
+- `mod_celadon\_storge_icons\icons\clothing\onmob_suit_tajara.dmi`
 
 ### Авторы
 

@@ -4,6 +4,7 @@
 #include "_democracy.dm"
 
 #include "code/battle_console.dm"
-#include "code/torpedo/torpedo.dm"
+#include "code/torpedo/torpedo_datum.dm"
+#include "code/torpedo/controlled_torpedo_datum.dm"
 
 #endif

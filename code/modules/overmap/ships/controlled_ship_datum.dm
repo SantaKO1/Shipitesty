@@ -29,6 +29,8 @@
 	var/list/obj/machinery/computer/helm/helms = list()
 	/// Is helm access for this ship locked
 	var/helm_locked = FALSE
+	/// Is helm access for this ship locked
+	var/battle_console_locked = FALSE
 	///Shipwide bank account used for cargo consoles and bounty payouts.
 	var/datum/bank_account/ship/ship_account
 

@@ -19,6 +19,7 @@
 	// [CELADON-ADD] - OVERMAP ICON - Это вагабонд насрал
 	var/obj/token_visuals/move_vec
 	var/obj/token_visuals/ship_image
+	var/obj/token_visuals/torpedo_image
 
 /obj/token_visuals
 	glide_size = 32
@@ -45,6 +46,11 @@
 				ship_image.icon = 'mod_celadon/_storge_icons/icons/overmap/overmap.dmi'
 				ship_image.icon_state = "ship"
 				ship_image.layer = ship_image.layer+2
+			if(!torpedo_image)
+				torpedo_image = new (loc)
+				torpedo_image.icon = 'mod_celadon/_storge_icons/icons/overmap/overmap.dmi'
+				torpedo_image.icon_state = "torpedo"
+				torpedo_image.layer = torpedo_image.layer+3
 		// [/CELADON-ADD]
 		map_name = "overmap_[REF(src)]_map"
 		cam_screen = new
@@ -72,6 +78,8 @@
 		QDEL_NULL(cam_plane_master)
 		QDEL_NULL(cam_background)
 	// [CELADON-ADD] - OVERMAP ICON - Это вагабонд насрал
+	if(torpedo_image)
+		QDEL_NULL(torpedo_image)
 	if(ship_image)
 		QDEL_NULL(ship_image)
 	if(move_vec)

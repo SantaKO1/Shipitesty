@@ -6,16 +6,14 @@ import {
   Section,
   ProgressBar,
   AnimatedNumber,
-  Knob,
   LabeledControls,
-  NumberInput,
   Divider,
 } from '../components';
 import { Window } from '../layouts';
 import { Table } from '../components/Table';
 import { decodeHtmlEntities } from 'common/string';
 
-export const HelmConsole = (_props, context) => {
+export const BattleConsole = (_props, context) => {
   const { data } = useBackend(context);
   const { mapRef, isViewer } = data;
   return (
@@ -88,30 +86,25 @@ const SharedContent = (_props, context) => {
             <ProgressBar
               value={shipInfo.sensor_range}
               minValue={1}
-              maxValue={8}
+              maxValue={4}
             >
               <AnimatedNumber value={shipInfo.sensor_range} />
             </ProgressBar>
             <Table.Cell>
               <Button
-                tooltip="Decrease Signal Length"
+                tooltip="Decrease Signal Length for torpedo"
                 tooltipPosition="right"
                 icon="arrow-left"
                 onClick={() => act('sensor_decrease')}
               />
               <Button
-                tooltip="Increase Signal Length"
+                tooltip="Increase Signal Length for torpedo"
                 tooltipPosition="right"
                 icon="arrow-right"
                 onClick={() => act('sensor_increase')}
               />
             </Table.Cell>
           </LabeledList.Item>
-          {shipInfo.mass && (
-            <LabeledList.Item label="Mass">
-              {shipInfo.mass + 'tonnes'}
-            </LabeledList.Item>
-          )}
         </LabeledList>
       </Section>
       <Section title="Radar">
@@ -210,7 +203,7 @@ const ShipContent = (_props, context) => {
         {arpa_ships.map((ship) => (
           <Table.Row key={ship.name}>
             <Table.Cell>{ship.name}</Table.Cell>
-            <Divider vertical hidden />
+            <Divider vertical divider />
             <Table.Cell>BRG:{ship.brg}°</Table.Cell>
             <Table.Cell>
               T/CPA:{ship.cpa}m {ship.tcpa}s
@@ -219,10 +212,10 @@ const ShipContent = (_props, context) => {
         ))}
       </Section>
       <Section
-        title="Engines"
+        title="Torpedos"
         buttons={
           <Button
-            tooltip="Refresh Engine"
+            tooltip="Refresh torpedos"
             tooltipPosition="left"
             icon="sync"
             disabled={isViewer}
@@ -233,66 +226,21 @@ const ShipContent = (_props, context) => {
         <Table>
           <Table.Row bold>
             <Table.Cell collapsing>Name</Table.Cell>
-            <Table.Cell fluid>Fuel</Table.Cell>
+            <Table.Cell fluid>Class</Table.Cell>
           </Table.Row>
           {engineInfo &&
             engineInfo.map((engine) => (
               <Table.Row key={engine.name} className="candystripe">
-                <Table.Cell collapsing>
-                  <Button
-                    content={
-                      engine.name.len < 14
-                        ? engine.name
-                        : engine.name.slice(0, 10) + '...'
-                    }
-                    color={engine.enabled && 'good'}
-                    icon={engine.enabled ? 'toggle-on' : 'toggle-off'}
-                    disabled={isViewer}
-                    tooltip="Toggle Engine"
-                    tooltipPosition="right"
-                    onClick={() =>
-                      act('toggle_engine', {
-                        engine: engine.ref,
-                      })
-                    }
-                  />
+                <Table.Cell name>Torpedo placeholder</Table.Cell>
+                <Table.Cell>
+                  content=
+                  {engine.name.len < 14
+                    ? engine.name
+                    : engine.name.slice(0, 10) + '...'}
                 </Table.Cell>
-                <Table.Cell fluid>
-                  {!!engine.maxFuel && (
-                    <ProgressBar
-                      fluid
-                      ranges={{
-                        good: [50, Infinity],
-                        average: [25, 50],
-                        bad: [-Infinity, 25],
-                      }}
-                      maxValue={engine.maxFuel}
-                      minValue={0}
-                      value={engine.fuel}
-                    >
-                      <AnimatedNumber
-                        value={(engine.fuel / engine.maxFuel) * 100}
-                        format={(value) => Math.round(value)}
-                      />
-                      %
-                    </ProgressBar>
-                  )}
-                </Table.Cell>
+                <Table.Cell fluid>{!!engine.maxFuel}</Table.Cell>
               </Table.Row>
             ))}
-          <Table.Row>
-            <Table.Cell>Max thrust per second:</Table.Cell>
-            <Table.Cell>
-              <AnimatedNumber
-                // [CELADON-EDIT] - CELADON FIXES
-                // value={estThrust * 500} // CELADON-EDIT - ORIGINAL
-                value={estThrust * 1600}
-                // [/CELADON-EDIT]
-                format={(value) => value.toFixed(2)}
-              />
-              Gm/s²
-            </Table.Cell>
-          </Table.Row>
         </Table>
       </Section>
     </>
@@ -302,16 +250,7 @@ const ShipContent = (_props, context) => {
 // Arrow directional controls
 const ShipControlContent = (_props, context) => {
   const { act, data } = useBackend(context);
-  const {
-    calibrating,
-    aiControls,
-    aiUser,
-    burnDirection,
-    burnPercentage,
-    speed,
-    estThrust,
-    rotating,
-  } = data;
+  const { burnDirection, burnPercentage, speed, estThrust, rotating } = data;
   let flyable = !data.docking && !data.docked;
 
   //  DIRECTIONS const idea from Lyra as part of their Haven-Urist project
@@ -328,7 +267,7 @@ const ShipControlContent = (_props, context) => {
   };
   return (
     <Section
-      title="Navigation"
+      title="Gun"
       buttons={
         <>
           <Button
@@ -345,27 +284,11 @@ const ShipControlContent = (_props, context) => {
             disabled={!flyable || speed}
             onClick={() => act('dock_empty')}
           />
-          <Button
-            tooltip={calibrating ? 'Cancel Jump' : 'Bluespace Jump'}
-            tooltipPosition="left"
-            icon={calibrating ? 'times' : 'angle-double-right'}
-            color={calibrating ? 'bad' : undefined}
-            disabled={!flyable}
-            onClick={() => act('bluespace_jump')}
-          />
-          <Button
-            tooltip={aiControls ? 'Disable AI Control' : 'Enable AI Control'}
-            tooltipPosition="left"
-            icon={aiControls ? 'toggle-on' : 'toggle-off'}
-            color={aiControls ? 'green' : 'red'}
-            disabled={aiUser}
-            onClick={() => act('toggle_ai_control')}
-          />
         </>
       }
     >
       <LabeledControls>
-        <LabeledControls.Item label="Direction" width={'100%'}>
+        <LabeledControls.Item label="Torpedo" width={'100%'}>
           <Table collapsing>
             <Table.Row height={1}>
               <Table.Cell width={1}>
@@ -378,101 +301,8 @@ const ShipControlContent = (_props, context) => {
                   onClick={() => act('rotate_left')}
                 />
               </Table.Cell>
-              <Table.Cell width={1}>
-                <Button
-                  icon="arrow-up"
-                  mb={1}
-                  color={burnDirection === DIRECTIONS.north && 'good'}
-                  disabled={!flyable}
-                  onClick={() =>
-                    act('change_heading', {
-                      dir: DIRECTIONS.north,
-                    })
-                  }
-                />
-              </Table.Cell>
-              <Table.Cell width={1}>
-                <Button
-                  icon="arrow-right"
-                  iconRotation={-45}
-                  mb={1}
-                  color={rotating === 1 && 'good'}
-                  disabled={!flyable}
-                  onClick={() => act('rotate_right')}
-                />
-              </Table.Cell>
-            </Table.Row>
-            <Table.Row height={1}>
-              <Table.Cell width={1}>
-                <Button
-                  tooltip={burnDirection === 0 ? 'Slow down' : 'Stop thrust'}
-                  icon={
-                    burnDirection === 0 || burnDirection === DIRECTIONS.stop
-                      ? 'stop'
-                      : 'pause'
-                  }
-                  mb={1}
-                  color={burnDirection === DIRECTIONS.stop && 'good'}
-                  disabled={!flyable || (burnDirection === 0 && !speed)}
-                  onClick={() => act('stop')}
-                />
-              </Table.Cell>
-              <Table.Cell width={1}>
-                <Button
-                  icon="arrow-down"
-                  mb={1}
-                  color={burnDirection === DIRECTIONS.south && 'good'}
-                  disabled={!flyable}
-                  onClick={() =>
-                    act('change_heading', {
-                      dir: DIRECTIONS.south,
-                    })
-                  }
-                />
-              </Table.Cell>
             </Table.Row>
           </Table>
-        </LabeledControls.Item>
-        <LabeledControls.Item label="Throttle">
-          <Knob
-            value={burnPercentage}
-            minValue={1}
-            step={1}
-            maxValue={100}
-            size={2}
-            unit="%"
-            onDrag={(e, value) =>
-              act('change_burn_percentage', {
-                percentage: value,
-              })
-            }
-            animated
-          />
-          <NumberInput
-            // [CELADON-EDIT] CELADON FIXES
-            // value={(burnPercentage / 100) * estThrust * 500} // CELADON-EDIT - ORIGINAL
-            value={(burnPercentage / 100) * estThrust * 1600}
-            // [/CELADON-EDIT]
-            minValue={0.01}
-            step={0.01}
-            // 5 times a second, 60 seconds in a minute (5 * 60 = 300)
-            // [CELADON-EDIT] CELADON FIXES
-            // maxValue={estThrust * 500} // CELADON-EDIT - ORIGINAL
-            maxValue={estThrust * 1600}
-            // [/CELADON-EDIT]
-            unit="Gm/s²"
-            onDrag={(e, value) =>
-              act('change_burn_percentage', {
-                // [CELADON-EDIT] CELADON FIXES
-                // percentage: Math.round((value / (estThrust * 500)) * 100), // CELADON-EDIT - ORIGINAL
-                percentage: Math.round((value / (estThrust * 1600)) * 100),
-                // [/CELADON-EDIT]
-              })
-            }
-            format={(value) => value.toFixed(2)}
-            animated
-            fluid
-          />
         </LabeledControls.Item>
       </LabeledControls>
     </Section>

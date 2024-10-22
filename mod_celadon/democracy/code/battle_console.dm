@@ -11,7 +11,7 @@
 #define PROTECTION_STATE_ACTIVE 1
 
 /obj/machinery/computer/battle_console
-	name = "battle helm console"
+	name = "battle console"
 	desc = "Used to start warcrime's."
 	icon_screen = "forensic"
 	icon_keyboard = "security_key"
@@ -99,15 +99,23 @@
 		current_ship = port.current_ship
 		current_ship.battle_consoles |= src
 
+/// Checks if this battle console is locked, or for the key being destroyed. Returns TRUE if locked.
+/obj/machinery/computer/battle_console/proc/check_keylock(silent=FALSE)
+	if(!current_ship.battle_console_locked)
+		return FALSE
+	if(!current_ship.shipkey)
+		current_ship.battle_console_locked = FALSE
+		return FALSE
+	if(IsAdminAdvancedProcCall())
+		return FALSE
+	if(issilicon(usr) && allow_ai_control)
+		return FALSE
+	if(!silent)
+		say("[src] is currently locked; please insert your key to continue.")
+		playsound(src, 'sound/machines/buzz-two.ogg')
+	return TRUE
 
-/*
-/obj/machinery/computer/helm/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
-	if(current_ship && current_ship != port.current_ship)
-		current_ship.helms -= src
-	current_ship = port.current_ship
-	current_ship.helms |= src
-
-/obj/machinery/computer/helm/ui_interact(mob/living/user, datum/tgui/ui)
+/obj/machinery/computer/battle_console/ui_interact(mob/living/user, datum/tgui/ui)
 	// Update UI
 	if(!current_ship && !reload_ship())
 		return
@@ -141,15 +149,15 @@
 			current_ship.token.update_screen()
 
 		// Open UI
-		ui = new(user, src, "HelmConsole", name)
+		ui = new(user, src, "BattleConsole", name)
 		ui.open()
 
-/obj/machinery/computer/helm/ui_data(mob/user)
+
+/obj/machinery/computer/battle_console/ui_data(mob/user)
 	. = list()
 	if(!current_ship)
 		return
 
-	.["calibrating"] = calibrating
 	.["arpa_ships"] = list()
 	var/list/arpobjects = current_ship.check_proximity()
 	var/arpdequeue_pointer = 0
@@ -236,7 +244,7 @@
 			)
 		.["engineInfo"] += list(engine_data)
 
-/obj/machinery/computer/helm/ui_static_data(mob/user)
+/obj/machinery/computer/battle_console/ui_static_data(mob/user)
 	. = list()
 	.["isViewer"] = viewer || (!allow_ai_control && issilicon(user))
 	.["mapRef"] = current_ship.token.map_name
@@ -248,6 +256,13 @@
 	)
 	.["canFly"] = TRUE
 	.["aiUser"] = issilicon(user)
+
+/*
+/obj/machinery/computer/battle_console/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
+	if(current_ship && current_ship != port.current_ship)
+		current_ship.helms -= src
+	current_ship = port.current_ship
+	current_ship.helms |= src
 
 /obj/machinery/computer/helm/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
